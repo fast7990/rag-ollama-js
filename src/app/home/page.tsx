@@ -5,6 +5,7 @@ import { parse } from 'marked';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
+import { throttle } from '../utils';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -48,14 +49,16 @@ export default function Home() {
         };
     }, [pdfRef, pageNumber, numPages]);
 
+  
+
     useEffect(() => {
         const userId = sessionStorage.getItem('userId') || '';
         setUser(userId);
-        getFile()
+        debouncedGetFile();
     }, [])
 
     useEffect(() => {
-        getFile()
+        debouncedGetFile();
     }, [user])
 
     const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -142,6 +145,7 @@ export default function Home() {
         const file = new File([blob], 'document.pdf'); // Create a File object
         setFile(file); // Set the File object
     }
+    const debouncedGetFile = throttle(getFile, 300); // 使用防抖函数包装 getFile，延迟 300ms 执行
 
     const handleUpload = async (file: File | null) => {
         if (file) {
