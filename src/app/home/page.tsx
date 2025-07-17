@@ -13,7 +13,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 export default function Home() {
-    const [messages, setMessages] = useState<{ text: string; sender: string }[]>([{ text: "Hi. How many I help you today ?", sender: "System" }]);
+    const [messages, setMessages] = useState<{ text: string; sender: string }[]>([{ text: "你好，今天我能帮你什么吗？", sender: "System" }]);
     const [input, setInput] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [pageNumber, setPageNumber] = useState<number>(1);
@@ -186,7 +186,7 @@ export default function Home() {
                     ))}
                     {loading && (
                         <div className="flex justify-center">
-                            <div className="animate-pulse text-blue-600 font-medium">Loading...</div>
+                            <div className="animate-pulse text-blue-600 font-medium">加载中...</div>
                         </div>
                     )}
                 </div>
@@ -197,7 +197,7 @@ export default function Home() {
                             className="flex-1 p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-gray-700 bg-gray-50"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            placeholder="Type your message..."
+                            placeholder="输入你的消息..."
                             disabled={loading}
                         />
                         <button
@@ -205,7 +205,7 @@ export default function Home() {
                             type="submit"
                             disabled={loading}
                         >
-                            {loading ? "Sending..." : "Send"}
+                            {loading ? "发送中..." : "发送"}
                         </button>
                     </form>
                 </div>
@@ -221,7 +221,7 @@ export default function Home() {
                                     <Page pageNumber={pageNumber} />
                                 </Document>
                                 <p className="mt-4 text-gray-600 font-medium">
-                                    Page {pageNumber} of {numPages}
+                                    第 {pageNumber} 页，共 {numPages} 页
                                 </p>
                             </div>
                         </div>
@@ -235,7 +235,7 @@ export default function Home() {
                                         : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white'
                                 }`}
                             >
-                                ← Previous
+                                ← 上一页
                             </button>
                             <button
                                 onClick={handleNextPage}
@@ -246,7 +246,7 @@ export default function Home() {
                                         : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white'
                                 }`}
                             >
-                                Next →
+                                下一页 →
                             </button>
                         </div>
                     </>
@@ -264,9 +264,9 @@ export default function Home() {
                                 className="px-8 py-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg group"
                                 onClick={() => document.getElementById('fileUpload')?.click()}
                             >
-                                <div className="text-xl font-semibold">Upload PDF</div>
+                                <div className="text-xl font-semibold">上传PDF</div>
                                 <div className="text-sm mt-2 text-blue-100 group-hover:text-white transition-colors">
-                                    Click to browse files
+                                    点击浏览文件
                                 </div>
                             </button>
                         </div>

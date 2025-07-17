@@ -8,23 +8,33 @@ export default function Home() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState('');
   const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    const response = await fetch('/api/login', {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json"
+    setError(''); // 重置错误消息
+    try {
+      const response = await fetch('/api/login', {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(response.statusText || '登录失败，请检查用户名和密码');
       }
-    });
-    await response.json();
-    setLoading(false);
-    if (response.ok) {
+      await response.json();
       sessionStorage.setItem('userId', username);
-      router.push('/home')
+      router.push('/home');
+    } catch (error) {
+      console.error('登录错误:', error);
+      setError(error instanceof Error ? error.message : '发生未知错误');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,7 +63,14 @@ export default function Home() {
             required
           />
         </div>
-        <button className="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200" type="submit">
+        {error && (
+          <div className="mb-4 text-red-500 text-sm font-medium animate-pulse">{error}</div>
+        )}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:bg-gray-400"
+        >
           Login
         </button>
         <p className="mt-4 text-center text-gray-600">
