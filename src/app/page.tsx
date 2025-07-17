@@ -32,9 +32,9 @@ export default function Home() {
     <div className="h-screen flex items-center justify-center bg-gray-100 overflow-hidden"  style={{ height: "92vh" }}>
       {loading && <div className="loader"><i className="fas fa-spinner fa-spin"></i></div>}
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-        <h2 className="text-3xl mb-6 text-blue-600 text-center">Login</h2>
+        <h2 className="text-3xl mb-6 text-blue-600 text-center">登录</h2>
         <div className="mb-6">
-          <label className="block mb-2 text-lg font-semibold text-gray-700">Username</label>
+          <label className="block mb-2 text-lg font-semibold text-gray-700">用户名</label>
           <input
             type="text"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
@@ -57,13 +57,13 @@ export default function Home() {
           Login
         </button>
         <p className="mt-4 text-center text-gray-600">
-          Don't have an account? 
+          没有账号？
           <Link 
             type="button" 
             className="text-blue-600 underline hover:text-blue-800 transition duration-200"
             href="/signup"
           >
-            Sign Up
+            注册账号
           </Link>
         </p>
       </form>
